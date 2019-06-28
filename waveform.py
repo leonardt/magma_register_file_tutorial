@@ -80,9 +80,14 @@ class WaveForm(dict):
 </html>
 """
 
-    def render_ipynb(self):
-        from IPython.core.display import display, HTML
-        display(HTML(self.render_html()))
+    def render_ipynb(self, image_name):
+        import requests
+        r = requests.post(f"http://wavedrom.craftware.info/rest/generate_link", data=self.to_wavejson())  # noqa
+        import urllib.request as req
+        image_file = f"images/{image_name}.png"
+        req.urlretrieve(r.text, image_file)
+        from IPython.display import Image
+        return Image(filename=image_file)
 
     def render(self, filenaem="waveform.html"):
         with open("waveform.html", "w") as f:

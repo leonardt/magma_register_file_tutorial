@@ -7,4 +7,4 @@ import magma.backend.coreir_
 def magma_test():
     import magma.config
     clear_cachedFunctions()
-    magma.backend.coreir_.__reset_context()
+    magma.backend.coreir_.CoreIRContextSingleton().reset_instance()

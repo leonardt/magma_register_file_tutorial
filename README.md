@@ -28,3 +28,11 @@ units defined in the file.
 
 [waveform.py](./waveform.py) defines a helper class for drawing waveforms using
 the wavedrom format.
+
+# Dependencies
+* coreir: https://github.com/rdaly525/coreir/blob/master/INSTALL.md
+* verilator: https://www.veripool.org/projects/verilator/wiki/Installing
+
+```
+pip install magma-lang mantle fault coreir jupyterlab
+```

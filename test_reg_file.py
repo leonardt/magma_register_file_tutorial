@@ -1,6 +1,6 @@
 from apb_model import APBBus, APBBusIO, Request, APB, APBCommand, \
     set_apb_inputs, make_request, step, write, read
-from reg_file import DefineRegFile, Register
+from reg_file import RegisterFileGenerator, Register
 import magma as m
 import fault
 from dataclasses import fields
@@ -8,8 +8,8 @@ from dataclasses import fields
 
 def test_simple_write():
     data_width = 32
-    regs = [Register(f"reg_{i}", init=i, has_ce=True) for i in range(4)]
-    RegFile = DefineRegFile(regs, data_width)
+    regs = tuple(Register(f"reg_{i}", init=i, has_ce=True) for i in range(4))
+    RegFile = RegisterFileGenerator(regs, data_width)
     tester = fault.Tester(RegFile, clock=RegFile.apb.PCLK)
     tester.circuit.apb.PRESETn = 1
 
@@ -30,8 +30,8 @@ def test_simple_write():
 
 def test_simple_write_read():
     data_width = 32
-    regs = [Register(f"reg_{i}", init=i, has_ce=True) for i in range(4)]
-    RegFile = DefineRegFile(regs, data_width)
+    regs = tuple(Register(f"reg_{i}", init=i, has_ce=True) for i in range(4))
+    RegFile = RegisterFileGenerator(regs, data_width)
     tester = fault.Tester(RegFile, clock=RegFile.apb.PCLK)
     tester.circuit.apb.PRESETn = 1
 
@@ -52,8 +52,8 @@ def test_simple_write_read():
 
 def test_write_then_reads():
     data_width = 32
-    regs = [Register(f"reg_{i}", init=i, has_ce=True) for i in range(4)]
-    RegFile = DefineRegFile(regs, data_width)
+    regs = tuple(Register(f"reg_{i}", init=i, has_ce=True) for i in range(4))
+    RegFile = RegisterFileGenerator(regs, data_width)
     tester = fault.Tester(RegFile, clock=RegFile.apb.PCLK)
     tester.circuit.apb.PRESETn = 1
 

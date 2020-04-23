@@ -1,4 +1,4 @@
-from top import DefineTop
+from top import TopGenerator
 import fault
 from apb_model import APBBus, APBBusIO, Request, APB, APBCommand, \
     set_apb_inputs, make_request, step, write, read
@@ -11,7 +11,7 @@ dma_fields = ["csr", "src_addr", "dst_addr", "txfr_len"]
 
 @pytest.mark.parametrize("mode, num_slaves", [("pack", 1), ("distribute", 2)])
 def test_top_simple_write(mode, num_slaves):
-    Top = DefineTop(mode=mode)
+    Top = TopGenerator(mode=mode)
 
     tester = fault.Tester(Top, clock=Top.apb.PCLK)
     tester.circuit.apb.PRESETn = 1
@@ -46,7 +46,7 @@ def test_top_simple_write(mode, num_slaves):
 
 @pytest.mark.parametrize("mode, num_slaves", [("pack", 1), ("distribute", 2)])
 def test_top_simple_write_read(mode, num_slaves):
-    Top = DefineTop(mode=mode)
+    Top = TopGenerator(mode=mode)
 
     tester = fault.Tester(Top, clock=Top.apb.PCLK)
     tester.circuit.apb.PRESETn = 1
@@ -77,7 +77,7 @@ def test_top_simple_write_read(mode, num_slaves):
 
 @pytest.mark.parametrize("mode, num_slaves", [("pack", 1), ("distribute", 2)])
 def test_top_write_then_reads(mode, num_slaves):
-    Top = DefineTop(mode=mode)
+    Top = TopGenerator(mode=mode)
 
     tester = fault.Tester(Top, clock=Top.apb.PCLK)
     tester.circuit.apb.PRESETn = 1

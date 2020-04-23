@@ -151,11 +151,11 @@ def APBBus(addr_width, data_width, num_slaves=1):
 
 
 def set_apb_inputs(tester, bus):
-    for key in tester._circuit.apb.Ks:
+    for key in tester._circuit.apb.keys():
         # Skip clock signals
         if key in ["PCLK", "PRESETn"]:
             continue
-        if tester._circuit.apb[key].isoutput():
+        if tester._circuit.apb[key].is_output():
             setattr(tester.circuit.apb, key,
                     getattr(bus.io.apb, key))
 
